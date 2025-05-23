@@ -1,0 +1,55 @@
+{% include "header.html" %}
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h1 class="text-center ">火車即時資訊</h1>
+            </div>
+            {% if login %}
+            <h2 class="mt-5">使用 {{ uname }} 紀錄資訊查詢</h2>
+            {% else %}
+            <div class="card-body">
+                <form action="/search" method="POST" class="mx-3 my-3">
+                    <div class="mb-3 ">
+                        <label for="start" class="form-label mx-2">起點站</label>
+                        <input type="text" class="form-control" id="start" name="start" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end" class="form-label mx-2">終點站</label>
+                        <input type="text" class="form-control" id="end" name="end" required>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-primary w-25">查詢</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if results %}
+        <h2 class="mt-5">查詢結果</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">車次</th>
+                    <th scope="col">起點站</th>
+                    <th scope="col">終點站</th>
+                    <th scope="col">出發時間</th>
+                    <th scope="col">到達時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.train_number }}</td>
+                    <td>{{ result.start_station }}</td>
+                    <td>{{ result.end_station }}</td>
+                    <td>{{ result.departure_time }}</td>
+                    <td>{{ result.arrival_time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
+</html>
